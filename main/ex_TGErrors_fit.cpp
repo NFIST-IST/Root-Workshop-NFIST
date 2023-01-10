@@ -1,5 +1,5 @@
 #include "ReadData.h"
-
+#include "TStyle.h"
 #include "TGraphErrors.h"
 #include "TCanvas.h"
 #include "TF1.h"
@@ -12,7 +12,8 @@ int main()
     auto data = DataImport.GetData();
 
     // Criar CANVAS
-    TCanvas c("canvas", "grafico", 200, 10, 600, 400);
+    TCanvas c("canvas", "grafico", 200, 10, 1920, 1080);
+    gStyle->SetOptFit(kTRUE);
 
     // Colocar dados no TGraph
     int n = data.size();
@@ -34,12 +35,14 @@ int main()
     /* criar o objeto!
     Também pode ser feito sem ser um ponteiro: "TGraphErrors gr(n, x, y, ex, ey);"
     Se for criado assim, para aceder aos elemento do objeto utiliza-se um "." ao invés de "->" */
-    gr->SetTitle("Ex1 Fit1D");          // Dar título ao gráfico
-    gr->GetXaxis()->SetTitle("Eixo X"); // Título do eixo X
-    gr->GetYaxis()->SetTitle("Eixo Y"); // Título do eixo Y
+    gr->SetTitle("Example Fit1D");                            // Dar título ao gráfico
+    gr->GetXaxis()->SetTitle("#theta (^{o})");                // Título do eixo X
+    gr->GetYaxis()->SetTitle("N^{o} de Coincid#hat{e}ncias"); // Título do eixo Y
 
-    gr->SetMarkerColor(60);
-    gr->SetMarkerSize(1);
+    gr->SetStats(1);
+
+    gr->SetMarkerColor(kGreen + 1);
+    gr->SetMarkerSize(1.2);
     gr->SetMarkerStyle(8);
 
     TF1 *f = new TF1("function_to_fit", "gaus", x[0], x[data.size()]);
@@ -51,7 +54,7 @@ int main()
 
     c.Update();
     gr->Draw("AP");
-    c.SaveAs("gaus_fit1D.pdf");
+    c.SaveAs("gaus_fit1D.png");
 
     delete gr;
 
