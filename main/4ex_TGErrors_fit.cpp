@@ -30,12 +30,19 @@ int main()
         ey[i] = data[i][3];
     }
 
-    // Criar objeto - gráfico com barras de erro
+    /*
+    Criar objeto - gráfico com barras de erro - provavelmente o que vão utilizar mais em qualquer tratamento
+    de dados de qualquer laboratório
+    */
     TGraphErrors *gr = new TGraphErrors(n, x, y, ex, ey);
-    /* criar o objeto!
+
+    /*
+    Criar o objeto!
     Também pode ser feito sem ser um ponteiro: "TGraphErrors gr(n, x, y, ex, ey);"
-    Se for criado assim, para aceder aos elemento do objeto utiliza-se um "." ao invés de "->" */
-    gr->SetTitle("Example Fit1D");                            // Dar título ao gráfico
+    Se for criado assim, para aceder aos elemento do objeto utiliza-se um "." ao invés de "->"
+    */
+
+    gr->SetTitle("4ex Gaussiana");                            // Dar título ao gráfico
     gr->GetXaxis()->SetTitle("#theta (^{o})");                // Título do eixo X
     gr->GetYaxis()->SetTitle("N^{o} de Coincid#hat{e}ncias"); // Título do eixo Y
 
@@ -45,16 +52,15 @@ int main()
     gr->SetMarkerSize(1.2);
     gr->SetMarkerStyle(8);
 
-    TF1 *f = new TF1("function_to_fit", "gaus", x[0], x[data.size()]);
+    TF1 *f = new TF1("function_to_fit", "gaus(0)", x[0], x[data.size()]);
     f->SetLineColor(kRed + 1);
     f->SetLineWidth(2);
 
     gr->Fit(f);
-    // std::cout << "ChiSquared: " << f->GetChisquare() << std::endl;
 
     c.Update();
     gr->Draw("AP");
-    c.SaveAs("gaus_fit1D.png");
+    c.SaveAs("ex4.png");
 
     delete gr;
 
