@@ -52,11 +52,11 @@ int main()
     gr->SetMarkerSize(1.2);
     gr->SetMarkerStyle(8);
 
-    TF1 *f = new TF1("function_to_fit", "gaus(0)", x[0], x[data.size()]);
+    TF1 *f = new TF1("function_to_fit", "gaus(0)", -10, 10);
     f->SetLineColor(kRed + 1);
     f->SetLineWidth(2);
 
-    gr->Fit(f);
+    gr->Fit(f, "R");
 
     c.Update();
     gr->Draw("AP");

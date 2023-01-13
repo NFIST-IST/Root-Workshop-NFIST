@@ -8,28 +8,6 @@
 #include "TApplication.h"
 #include "TGraphErrors.h"
 
-std::vector<double_t *> data_to_vectors(std::vector<std::vector<float>> data)
-{
-    std::vector<double_t *> data_return;
-    int n = data.size();
-    double_t x[n];
-    double_t y[n];
-    double_t ex[n];
-    double_t ey[n];
-
-    for (int i = 0; i < n; i++)
-    {
-        x[i] = data[i][0];
-        y[i] = data[i][1];
-        ex[i] = data[i][2];
-        ey[i] = data[i][3];
-    }
-    data_return.push_back(x);
-    data_return.push_back(y);
-    data_return.push_back(ex);
-    data_return.push_back(ey);
-    return data_return;
-}
 
 int main()
 {
@@ -107,21 +85,23 @@ int main()
     TF1 *f1 = new TF1("f1", "gaus(0)", -20, 20);
     f1->SetParameters(150, 0.1, 1);
     f1->SetLineColor(kRed);
+    
     TF1 *f2 = new TF1("f2", "gaus(0)", -40, 0);
     f2->SetParameters(140, -20, 5);
     f2->SetLineColor(kBlue);
     f2->SetParLimits(0, 130, 150);
+    
     TF1 *f3 = new TF1("f3", "gaus(0)", 0, 40);
     f3->SetParameters(150, 20, 1);
     f3->SetLineColor(kGreen);
-
-    gr1->Fit(f1);
+    
+    gr1->Fit(f1, "R");
     gr2->Fit(f2);
     gr3->Fit(f3);
 
     gr1->Draw("AP");
     gr2->Draw("same P");
-    gr3->Draw("same P");
+    gr3->Draw("same P r");
     c.Update();
     c.SaveAs("MultiFit.png");
     return 0;

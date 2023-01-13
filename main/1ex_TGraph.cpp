@@ -24,14 +24,15 @@ int main()
     
     // Criar o objeto 
     TGraph *gr = new TGraph(nstep, x, y);
-    
+    //TGraph gr(nstep, x, y);
+
     // Colocar as informações sobre o FIT
     gStyle->SetOptFit(kTRUE);
 
     // Definir titulo e labels dos eixos
     gr->SetTitle("1ex TGraph");
     gr->GetXaxis()->SetTitle("Eixo X");
-    gr->GetYaxis()->SetTitle("podemos escrever em LaTeX: #gamma #sum");
+    gr->GetYaxis()->SetTitle("podemos escrever em LaTeX: #gamma #sum #hat{o}"); 
 
     // Definições Estéticas!
     gr->SetMarkerColor(kRed);

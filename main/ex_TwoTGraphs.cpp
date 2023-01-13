@@ -23,6 +23,8 @@ int main()
         y2[i] = exp(0.5 * i);
     }
 
+    //std::vector<double> vec;
+
     TGraph *gr1 = new TGraph(n, x1, y1);
     TGraph *gr2 = new TGraph(n, x2, y2);
 
@@ -43,7 +45,7 @@ int main()
     
     c.Update();
     gr1->Draw("APC");
-    gr2->Draw("PC");
+    gr2->Draw("same PC");
     c.SaveAs("TwoGraphs.png");
     return 0;
 }
